@@ -4,10 +4,20 @@
       <p>Bidding</p>
     </div>
     <div class="table">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="date" label="Date" width="180" />
-        <el-table-column prop="name" label="Name" width="180" />
-        <el-table-column prop="address" label="Address" />
+      <el-table :data="tableData" style="width: 100%" border>
+        <el-table-column sortable prop="date" label="Date" />
+        <el-table-column sortable prop="name" label="Name" />
+        <el-table-column sortable prop="address" label="Address" />
+        <el-table-column sortable prop="address" label="Address" />
+        <el-table-column sortable prop="address" label="Address" />
+        <el-table-column sortable prop="address" label="Address" />
+        <el-table-column sortable prop="address" label="Address" />
+        <el-table-column label="Action">
+          <template #default>
+            <el-button size="mini">Edit</el-button>
+            <el-button size="mini" type="danger">Delete</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -40,5 +50,10 @@ const tableData = [
 </script>
 
 <style scoped lang="scss">
-/* 样式 */
+.bidding-view {
+  width: 100%;
+  .table {
+    margin: 12px;
+  }
+}
 </style>

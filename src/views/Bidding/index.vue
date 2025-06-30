@@ -5,7 +5,18 @@
     </div>
     <div class="table">
       <el-table :data="tableData" style="width: 100%" border>
-        <el-table-column sortable prop="date" label="Date" />
+        <el-table-column sortable prop="date">
+          <template #header>
+            <el-popover
+              class="box-item"
+              title="Title"
+              content="Bottom Center prompts info"
+              placement="bottom"
+            >
+              <template #reference>Date</template>
+            </el-popover>
+          </template>
+        </el-table-column>
         <el-table-column sortable prop="name" label="Name" />
         <el-table-column sortable prop="address" label="Address" />
         <el-table-column sortable prop="address" label="Address" />
@@ -47,6 +58,11 @@ const tableData = [
     address: 'No. 189, Grove St, Los Angeles',
   },
 ]
+
+const str =
+  'Added Interim containment action as Site-Replace & created the task "Pending assign design team"(yi.zhong)'
+const res = str.indexOf('Site-Replace')
+console.log(str.substring(0, res))
 </script>
 
 <style scoped lang="scss">

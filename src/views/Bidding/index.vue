@@ -5,24 +5,29 @@
     </div>
     <div class="table">
       <el-table :data="tableData" style="width: 100%" border>
-        <el-table-column sortable prop="date">
+        <el-table-column
+          v-for="(coulmn, index) in tableColumns"
+          :key="index"
+          :prop="coulmn.prop"
+          :label="coulmn.label"
+          :type="coulmn.type"
+          :sortable="coulmn.sortable"
+          :width="coulmn.width"
+        >
           <template #header>
-            <el-popover
-              class="box-item"
-              title="Title"
-              content="Bottom Center prompts info"
-              placement="bottom"
-            >
-              <template #reference>Date</template>
+            <el-popover class="box-item" placement="bottom" width="auto">
+              <template #reference>{{ coulmn.label }}</template>
+              <template #default>
+                <div class="filter-content">
+                  <el-input v-model="filter_date" />
+                </div>
+                <div class="filter-btn">
+                  <el-button type="primary" size="small" @click="onSearch">confirm</el-button>
+                </div>
+              </template>
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column sortable prop="name" label="Name" />
-        <el-table-column sortable prop="address" label="Address" />
-        <el-table-column sortable prop="address" label="Address" />
-        <el-table-column sortable prop="address" label="Address" />
-        <el-table-column sortable prop="address" label="Address" />
-        <el-table-column sortable prop="address" label="Address" />
         <el-table-column label="Action">
           <template #default>
             <el-button size="mini">Edit</el-button>
@@ -34,7 +39,39 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+import type { TableColumn } from './type'
+
 defineOptions({ name: 'BiddingView' })
+
+const filter_date = ref('')
+
+const tableColumns = computed<TableColumn[]>(() => {
+  return [
+    {
+      prop: 'date',
+      label: 'Date',
+      type: '',
+      sortable: true,
+      width: 300,
+    },
+    {
+      prop: 'name',
+      label: 'Name',
+      type: '',
+      sortable: true,
+      width: 300,
+    },
+    {
+      prop: 'address',
+      label: 'Address',
+      type: '',
+      sortable: true,
+      width: 500,
+    },
+  ]
+})
+
 // 响应式数据
 const tableData = [
   {
@@ -59,10 +96,10 @@ const tableData = [
   },
 ]
 
-const str =
-  'Added Interim containment action as Site-Replace & created the task "Pending assign design team"(yi.zhong)'
-const res = str.indexOf('Site-Replace')
-console.log(str.substring(0, res))
+// methods
+const onSearch = () => {
+  console.log(filter_date.value)
+}
 </script>
 
 <style scoped lang="scss">
@@ -70,6 +107,14 @@ console.log(str.substring(0, res))
   width: 100%;
   .table {
     margin: 12px;
+  }
+}
+.el-popover {
+  .filter-content {
+    margin-bottom: 12px !important;
+  }
+  .filter-btn {
+    text-align: right;
   }
 }
 </style>

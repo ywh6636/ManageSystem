@@ -1,0 +1,20 @@
+<template>
+  <div class="show-component">
+    <h3>{{ inputValue }}</h3>
+    <el-divider />
+    <MentionView />
+  </div>
+</template>
+<script setup lang="ts">
+defineOptions({ name: 'ShowComponent' })
+import { ref } from 'vue'
+import MentionView from '@/views/components/mention/index.vue'
+
+// 响应式数据
+
+const inputValue = ref('234234')
+</script>
+
+<style scoped>
+/* 样式 */
+</style>

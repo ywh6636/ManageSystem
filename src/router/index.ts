@@ -13,6 +13,16 @@ const router = createRouter({
       name: 'bidding',
       component: () => import('@/views/Bidding/index.vue'),
     },
+    {
+      path: '/dymatic',
+      name: 'dymatic',
+      component: () => import('@/views/DynamicForm/index.vue'),
+    },
+    {
+      path: '/showComponent',
+      name: 'showComponent',
+      component: () => import('@/views/showComponent/index.vue'),
+    },
   ],
 })
 

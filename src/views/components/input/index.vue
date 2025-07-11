@@ -1,6 +1,12 @@
 <template>
   <div class="input-view">
-    <input :type="type" v-model="inputValue" />
+    <input
+      :type="type"
+      v-model="inputValue"
+      @keydown="handleKeydown"
+      @input="handleInput"
+      @change="handleChange"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -21,10 +27,24 @@ const inputValue = computed({
   },
   set(value) {
     emit('update:modelValue', value)
-    emit('change', value)
-    emit('input', value)
   },
 })
+
+// 事件处理函数 - 正确传递 $event
+const handleKeydown = (event: KeyboardEvent) => {
+  // 传递事件给父组件
+  emit('keydown', event)
+}
+
+const handleInput = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  emit('input', target.value)
+}
+
+const handleChange = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  emit('change', target.value)
+}
 </script>
 
 <style scoped lang="scss">

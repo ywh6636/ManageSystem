@@ -19,4 +19,5 @@ export const inputEmit = {
   'update:modelValue': (value: InputType): void => {},
   change: (value: InputType): void => {},
   input: (value: InputType): void => {},
+  keydown: (event: KeyboardEvent): void => {},
 }

@@ -15,7 +15,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, useTemplateRef } from 'vue'
+import { ref, computed } from 'vue'
 import InputView from '@/views/components/input/index.vue'
 defineOptions({ name: 'MentionView' })
 
@@ -28,13 +28,26 @@ const inputValue = ref('')
 const isShowSelect = ref(false)
 const cursorPosition = ref({ x: 0, y: 0 })
 const selectedIndex = ref(-1)
-const mentionViewRef = useTemplateRef('mentionViewRef')
+const mentionViewRef = ref<HTMLElement>()
 
 const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === '@' || (event.code === 'Digit2' && event.shiftKey)) {
-    cursorPosition.value.x = mentionViewRef.value?.offsetHeight || 0
-    cursorPosition.value.y = 0
     // 获取光标位置
+    const target = event.target as HTMLInputElement
+    const rect = target.getBoundingClientRect()
+
+    console.log('input元素信息:', {
+      height: target.offsetHeight,
+      width: target.offsetWidth,
+      rect: rect,
+    })
+
+    // 使用input元素的位置来计算弹框位置
+    cursorPosition.value = {
+      x: rect.left,
+      y: rect.bottom + 5,
+    }
+
     isShowSelect.value = true
     selectedIndex.value = -1
   } else if (event.key === 'Escape') {
@@ -58,9 +71,9 @@ const handleKeyDown = (event: KeyboardEvent) => {
 
 const styleSelect = computed(() => ({
   position: 'absolute' as const,
-  top: `${cursorPosition.value.x}px`,
-  left: `${cursorPosition.value.y}px`,
-  width: '100%',
+  top: `${cursorPosition.value.y}px`,
+  left: `${cursorPosition.value.x}px`,
+  width: '200px',
   zIndex: 1000,
 }))
 
